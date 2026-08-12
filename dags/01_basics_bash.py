@@ -18,13 +18,14 @@
 # DAG 클레스
 from airflow import DAG
 # 오퍼레이터 2.x => 3.x에서는 패키지 경로가 변경됨
+# pyrefly: ignore [missing-import]
 from airflow.operators.bash import BashOperator
 # 스케쥴 -> 시간
 from datetime import datetime, timedelta
 
 # 2-1. default_args, 편의상 바깥에서 정의, 향후 내부에서 정의
 default_args = {
-  "owner"           : "aic-de1-admin",  # DAG 소유주
+  "owner"           : "aic-de7-admin",  # DAG 소유주
   "depends_on_past" : False,            # 과거 데이터(가동 시간 대비) 소급 처리 금지
   "retries"         : 1,                # 작업 실패시 재시도 회수 1회 설정
   "retry_delay"     : timedelta(minutes=5) # 작업 실패후 5분후 재시도
