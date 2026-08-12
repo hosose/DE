@@ -48,7 +48,20 @@ with DAG(
 
 ) as dag:  
   # 3. Operator 정의
+  t1 = BashOperator(
+    task_id       = "date-print", # 영문자, 숫자, 하이프, 마침표, 언더바
+    bash_command  = ""
+  ) # task 정의됨
+  t2 = BashOperator(
+    task_id       = "sleep",
+    bash_command  = ""
+  )
+  t3 = BashOperator(
+    task_id       = "echo-print",
+    bash_command  = ""
+  )
 
   # 4. 의존성 정의, 구동 순서 정의
-
+  # t1 실행 -> t2 실행 -> t3 실행, 성공이 전제
+  t1 >> t2 >> t3
   pass
