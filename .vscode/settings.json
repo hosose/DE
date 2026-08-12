@@ -1,0 +1,3 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}\\airflow\\Scripts\\python.exe"
+}
