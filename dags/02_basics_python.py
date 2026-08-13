@@ -6,11 +6,13 @@
 
 # 1. 모듈 가져오기
 from airflow import DAG
+# pyrefly: ignore [missing-import]
 from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 import logging # 레벨별 로그 출력 (에러, 경고, 정보, 디버깅,..)
 
 # KST (한국 시간대 전체 조정)
+# pyrefly: ignore [missing-import]
 import pendulum
 KST = pendulum.timezone("Asia/Seoul")
 
