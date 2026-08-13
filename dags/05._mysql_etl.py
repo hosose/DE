@@ -63,10 +63,43 @@ def _transform(**kwargs):
   json_file_path  = ti.xcom_pull(task_ids="extract")
   logging.info( f'전달한 데이터 파일 경로 {json_file_path}'  )
 
-  pass
+  # 2. transform => 데이터 clean, 전처리(단위변경, 파생변수, ....)
+  #    섭씨 온도를 화씨 온도로 계산 -> 파생변수 추가 -> pandas의 DataFrame 활용
+  #    섭씨 온도 100도 이하(<=)만 센서가 정상, 그 이상은 이상탐지의 대상으로 간주 -> 이상치 제거(컨셉)
+  # 2-1. json file -> load -> DataFrame
+  df = pd.read_json( json_file_path )
+  # 2-2. 이상치 제거(컨셉) -> clean 작업의 범주, 100도 이하만(조건->블리언) 추출(인덱싱):블리언 인덱싱
+  target_df = df[ df['temperature'] <= 100  ].copy()
+  # 2-3. 파생 변수 생성 -> 섭씨 => 화씨
+  #      °F = (°C × 9/5) + 32
+  target_df["temperature_f"] = (target_df['temperature'] * 9/5) + 32
+
+  logging.info( f'가공된 데이터 (rows, cols) {target_df.shape}'  )
+  # 3. 전처리된 내용 [v]csv|parquet|... 저장
+  csv_file_path = f"{DATA_PATH}/preprocessing_data_{kwargs['ds_nodash']}.csv"
+  target_df.to_csv(csv_file_path, index=False)
+  logging.info( f'가공된 데이터 저장 {csv_file_path}'  )
+
+  # 4. 반환, XCOM 전달, 개시
+  return csv_file_path
 
 
 def _load(**kwargs):
+  # 1. csv 경로 획득
+  ti             = kwargs["ti"]
+  csv_file_path  = ti.xcom_pull(task_ids="transform")
+  logging.info( f'전달한 데이터 파일 경로 {csv_file_path}'  )
+  
+  # 2. csv -> df 로드
+  df = pd.read_csv( csv_file_path )
+
+  # 3. mysql 연결 -> 데이터 삽입
+  hooks = MySqlHook(mysql_conn_id="mysql_default")
+  try:
+    with hooks.get_conn() as conn:
+      pass
+  except Exception as e:
+    logging.error(f'sql  에러 { e }')
   pass
 
 # DAG 정의
