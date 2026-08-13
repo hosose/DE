@@ -6,12 +6,15 @@
 
 # 1. 모듈 가져오기
 from airflow import DAG
-# pyrefly: ignore [missing-import]
 from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 import logging # 레벨별 로그 출력 (에러, 경고, 정보, 디버깅,..)
 
-# 2-1. 콜백함수 정의
+# KST (한국 시간대 전체 조정)
+import pendulum
+KST = pendulum.timezone("Asia/Seoul")
+
+# 3-1. 콜백함수 정의 -> 실제 task 작업 상세 내용
 def _extract_cb(**kwargs):
   '''
   - kwargs : airflow가 작업하기 전에 내부 정보(context)를 접근할수 있는 내용 엔트리포인트
@@ -23,6 +26,10 @@ def _extract_cb(**kwargs):
   ds        = kwargs['ds']
   ds_nodash = kwargs['ds_nodash']
   run_id    = kwargs['run_id']  
+  # 시간 보정
+  logical_date     = kwargs["logical_date"]
+  logical_date_kst = logical_date.in_timezone(KST)
+  
 
   logging.info("=== Extract 작업 ===")
   logging.info(f" ti = {ti}")
@@ -53,10 +60,8 @@ def _transform_cb(**kwargs):
 
   # 3. 데이터 확인
   logging.info("=== transform ===")
-  # ds = 2026-08-12 ds_nodash = 20260812 run_id    = manual__2026-08-12T06:51:24.229623+00:00
   logging.info(f"data = {data}")
   pass
-
 
 
 # 2. DAG 정의
@@ -64,12 +69,16 @@ with DAG(
   dag_id      = "02_basics_python",
   description = "파이썬 task, XCOM 사용",
   default_args= {
-    "owner"           : "aic-de7-admin",    
+    "owner"           : "aic-de1-admin",    
     "retries"         : 1,
     "retry_delay"     : timedelta(minutes=1)
   },
   schedule_interval = "@once", # 수동으로 한번 수행, 주기성 x
-  start_date  = datetime(2026,6,29),
+  # 수행 시작 시간 서울 시간대 타임존 조정
+  start_date  = pendulum.datetime(
+    2026,6,29,
+    tz=KST
+  ),#datetime(2026,6,29),
   catchup     = False,
   tags        = ['python', 'xcom']
 ) as dag: 
