@@ -1,7 +1,7 @@
 {
-  "venvPath": ".",
+  "venvPath": "c:/Users/NT551_11TH/OneDrive/Desktop/workspace/DE",
   "venv": "airflow",
   "extraPaths": [
-    "airflow/Lib/site-packages"
+    "c:/Users/NT551_11TH/OneDrive/Desktop/workspace/DE/airflow/Lib/site-packages"
   ]
 }

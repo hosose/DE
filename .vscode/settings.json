@@ -4,6 +4,6 @@
   "python.analysis.extraPaths": [
     "C:/Users/NT551_11TH/OneDrive/Desktop/workspace/DE/airflow/Lib/site-packages"
   ],
-  "pyright.venvPath": "C:/Users/NT551_11TH/OneDrive/Desktop/workspace/DE/airflow",
+  "pyright.venvPath": "C:/Users/NT551_11TH/OneDrive/Desktop/workspace/DE",
   "pyright.venv": "airflow"
 }
