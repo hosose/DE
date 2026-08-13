@@ -1,7 +1,9 @@
 {
-  "python.defaultInterpreterPath": "${workspaceFolder}/airflow/Scripts/python.exe",
-  "python.interpreterPath": "${workspaceFolder}/airflow/Scripts/python.exe",
+  "python.defaultInterpreterPath": "C:/Users/NT551_11TH/OneDrive/Desktop/workspace/DE/airflow/Scripts/python.exe",
+  "python.interpreterPath": "C:/Users/NT551_11TH/OneDrive/Desktop/workspace/DE/airflow/Scripts/python.exe",
   "python.analysis.extraPaths": [
-    "${workspaceFolder}/airflow/Lib/site-packages"
-  ]
+    "C:/Users/NT551_11TH/OneDrive/Desktop/workspace/DE/airflow/Lib/site-packages"
+  ],
+  "pyright.venvPath": "C:/Users/NT551_11TH/OneDrive/Desktop/workspace/DE/airflow",
+  "pyright.venv": "airflow"
 }

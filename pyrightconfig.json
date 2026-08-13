@@ -1,0 +1,7 @@
+{
+  "venvPath": ".",
+  "venv": "airflow",
+  "extraPaths": [
+    "airflow/Lib/site-packages"
+  ]
+}
