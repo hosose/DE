@@ -1,0 +1,7 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/airflow/Scripts/python.exe",
+  "python.interpreterPath": "${workspaceFolder}/airflow/Scripts/python.exe",
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/airflow/Lib/site-packages"
+  ]
+}
