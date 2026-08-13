@@ -2,6 +2,7 @@
 - DAG -> DAG 작동 시키는 트리거 오퍼레이터,  사용
 '''
 # 1. 모듈
+from contextlib import closing
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
@@ -32,10 +33,10 @@ def _load(**kwargs):
   # 3. mysql 연결 -> 데이터 삽입
   hooks = MySqlHook(mysql_conn_id="mysql_default")
   try:
-    with hooks.get_conn() as conn:
+    with closing(hooks.get_conn()) as conn:
       logging.info(f'커넥션 획득 완료')
       # 1. 커서 획득
-      with conn.cursor() as cursor:
+      with closing(conn.cursor()) as cursor:
         # 2. insert 구문 작성
         sql = '''
             insert into sensor_readings
