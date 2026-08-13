@@ -79,7 +79,7 @@ with DAG(
     reset_dag_run  = True ,
     # 기타 설정
     # 다음 DAG가 수행되는 것을 보고 종료할것인가?(동기) 명령 전달 후 바로 종료?(비동기) => 기본이 비동기
-    wait_for_completion = True # 명령 전달 후 바로 종료
+    wait_for_completion = False # 명령 전달 후 바로 종료
     
   )
 
