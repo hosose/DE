@@ -216,3 +216,5 @@ logs/
 airflow/
 
 blog/
+
+devops_tf_k8s_ci/
