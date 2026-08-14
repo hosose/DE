@@ -218,3 +218,15 @@ airflow/
 blog/
 
 devops_tf_k8s_ci/
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+!*.tfvars.example
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
