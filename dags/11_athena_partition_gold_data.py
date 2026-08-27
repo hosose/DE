@@ -11,9 +11,9 @@ from airflow.providers.amazon.aws.operators.s3 import S3DeleteObjectsOperator
 # 2. 환경변수
 AWS_CONN_ID         = "aws_default"
 # 버킷
-BUCKET_NAME         = "de-ai-25-loggen-s3-bk-827913617635"
+BUCKET_NAME         = "de-ai-07-loggen-loggen-s3-bk-827913617635"
 # 디비명
-DATABASE_NAME       = "de_ai_25_loggen_silver_glue_db"
+DATABASE_NAME       = "de_ai_07_loggen_silver_glue_db"
 # 테이블명
 SILVER_TABLE_NAME   = "silver_logs_tbl"
 
@@ -34,8 +34,9 @@ TARGET_MONTH = "08"   #"{{ dag_run.conf.get('target_date', ds)[5:7] }}"
 TARGET_DAY   = "26"   #"{{ dag_run.conf.get('target_date', ds)[8:10] }}"
 
 # 매일 1개의 데이터셋 구성 => 파티션 사용 권장
+# s3://버킷/gold/daily_report//year=2026/month=08/day=26/
 # s3://버킷/gold/daily_report/year=2026/month=08/day=26/
-GOLD_PARTITION_PREFIX = f"{GOLD_PREFIX}/year={TARGET_YEAR}/month={TARGET_MONTH}/day={TARGET_DAY}/"
+GOLD_PARTITION_PREFIX = f"{GOLD_PREFIX}year={TARGET_YEAR}/month={TARGET_MONTH}/day={TARGET_DAY}/"
 
 # 3. DAG 정의
 with DAG(  
@@ -121,7 +122,7 @@ with DAG(
     # 4-4. 당일 전체 데이터에 대한(파티션 수행) 데이터 insert 처리
     t4_insert_gold_table = AthenaOperator(
         task_id = "insert_gold_table",
-        # sql
+        # 데이터 조회하여 insert 할때 파티션정보를 같이 추가하여, 해당 결과셋을 parquet로 만들어서 어떤 위치에 저장할지 지정
         query = f'''
             insert into {GOLD_TABLE_NAME}
             select
@@ -146,7 +147,7 @@ with DAG(
                 COALESCE( SUM(response.response_bytes), 0 ) AS total_response_bytes,
                 
                 '{TARGET_YEAR}' as year,
-                '{TARGET_MONTH}' as month
+                '{TARGET_MONTH}' as month,
                 '{TARGET_DAY}' as day
             from {SILVER_TABLE_NAME}
             where 
