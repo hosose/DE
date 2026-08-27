@@ -4,7 +4,7 @@ variable "aws_region" {
   default     = "ap-northeast-2"
 }
 
-# 프로젝트명 수정 : de-ai-25-infra => de-ai-25-loggen
+# 프로젝트명 수정 : de-ai-07-infra => de-ai-07-loggen
 variable "project_name" {
   description = "데이터 엔지니터 프로젝트 연습용"
   type        = string

@@ -4,7 +4,7 @@
 '''
 # 1. 모듈 가져오기
 from fastapi import FastAPI     # 앱
-from pydantic import BaseModel  # 요쳥/응답 클레스 구성시 수퍼클레스 역활
+from pydantic import BaseModel  # 요쳥/응답 클레스 구성시 수퍼클레스 역할
 from typing import List         # 요청/응답 데이터 구성시 구조 정의시 사용
 import random                   # 신용평가시 활용
 

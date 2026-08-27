@@ -12,26 +12,28 @@ resource "aws_glue_catalog_table" "silver" {
   table_type    = "EXTERNAL_TABLE"
 
   parameters = {
-    EXTERNAL                    = "TRUE"
-    "parquet.compression"       = "SNAPPY"
-    "projection.enabled"        = "true"
-    "projection.year.type"      = "integer"
-    "projection.year.range"     = "2026,2040" # 뒤에 2040는 설정값, 2026은 현재로 가정
-    "projection.month.type"     = "integer"
-    "projection.month.range"    = "1,12"
-    "projection.month.digits"   = "2" # 2자리수로 맞춤
-    "projection.day.type"       = "integer"
-    "projection.day.range"      = "1,31"
-    "projection.day.digits"     = "2" # 2자리수로 맞춤
-    "projection.hour.type"      = "integer"
-    "projection.hour.range"     = "0,23"
-    "projection.hour.digits"    = "2" # 2자리수로 맞춤
-    "storage.location.template" = "s3://${aws_s3_bucket.data.bucket}/silver/year=$${year}/month=$${month}/day=$${day}/hour=$${hour}"
+    EXTERNAL                  = "TRUE"
+    "parquet.compression"     = "SNAPPY"
+    "projection.enabled"      = "true"
+    "projection.year.type"    = "integer"
+    "projection.year.range"   = "2026,2040" # 뒤에 2040는 설정값, 2026은 현재로 가정
+    "projection.month.type"   = "integer"
+    "projection.month.range"  = "1,12"
+    "projection.month.digits" = "2" # 2자리수로 맞춤
+    "projection.day.type"     = "integer"
+    "projection.day.range"    = "1,31"
+    "projection.day.digits"   = "2" # 2자리수로 맞춤
+    "projection.hour.type"    = "integer"
+    "projection.hour.range"   = "0,23"
+    "projection.hour.digits"  = "2" # 2자리수로 맞춤
+    #"storage.location.template" = "s3://${locals.airflow_bucket_name}/silver/year=$${year}/month=$${month}/day=$${day}/hour=$${hour}"
+    "storage.location.template" = "s3://${var.silver_bucket_name}/silver/year=$${year}/month=$${month}/day=$${day}/hour=$${hour}"
   }
 
   # 실제 데이터가 어디에 존재, 어떤 파일 형식, 어떤 스키마를 가지는지 구성
   storage_descriptor {
-    location      = "s3://${aws_s3_bucket.data.bucket}/silver/"
+    #location      = "s3://${locals.airflow_bucket_name}/silver/"
+    location      = "s3://${var.silver_bucket_name}/silver/"
     input_format  = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat"
     output_format = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat"
     compressed    = true

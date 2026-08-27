@@ -6,9 +6,9 @@ locals {
   # 글로벌 기준 : 버킷 이름은 3~63자여야 하며 글로벌 네임스페이스 내에서 고유해야 합니다. 
   #             버킷 이름은 문자나 숫자로 시작하고 끝나야 합니다. 
   #             유효한 문자는 a~z, 0~9, 마침표(.), 하이픈(-)입니다 => 리소스명 `-` 잘 사용
-  # var.project_name : de-ai-25-infra
+  # var.project_name : de-ai-07-infra
   # data.aws_caller_identity.current.account_id : 827913617635
-  # 최종버킷명 : de-ai-25-infra-s3-bk-827913617635
+  # 최종버킷명 : de-ai-07-infra-s3-bk-827913617635
   airflow_bucket_name = "${var.project_name}-s3-bk-${data.aws_caller_identity.current.account_id}"
   #airflow_bucket_name = "${var.project_name}-s3-bk-${data.aws_caller_identity.current.account_id}"
 
@@ -34,7 +34,7 @@ resource "aws_s3_bucket" "airflow_data" {
   # )
   tags = {
     ManageBy = "Terraform"
-    Project  = "de-ai-25-loggen"
+    Project  = "de-ai-07-loggen"
     Purpose  = "로그 제너레이터"
   }
 }
