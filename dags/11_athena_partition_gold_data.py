@@ -90,7 +90,7 @@ with DAG(
         database    = DATABASE_NAME,
         output_location = QUERY_RESULT_S3,
         # 워크그룹의 저장 위치가 더 우선순위가 됨
-        # workgroup   = "de-ai-25-loggen-analysis"
+        # workgroup   = "de-ai-07-loggen-analysis"
     )
 
 
@@ -108,7 +108,7 @@ with DAG(
         aws_conn_id = AWS_CONN_ID,
         database    = DATABASE_NAME,
         output_location = QUERY_RESULT_S3,
-        # workgroup   = "de-ai-25-loggen-analysis"
+        # workgroup   = "de-ai-07-loggen-analysis"
     )
     
     # 4-3. 누적 교체하는 관점 -> 데이터 삭제 처리 필요
@@ -163,7 +163,7 @@ with DAG(
         database    = DATABASE_NAME,
         output_location = QUERY_RESULT_S3,
         # 워크그룹의 저장 위치가 더 우선순위가 됨
-        # workgroup   = "de-ai-25-loggen-analysis"
+        # workgroup   = "de-ai-07-loggen-analysis"
     )
 
 
